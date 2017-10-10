@@ -1,0 +1,22 @@
+body {
+    background-color: gray;
+}
+
+#container {
+    margin: auto;
+    text-align: center;
+    border: 2px solid black;
+    left: 50%;
+    width: 800px;
+}
+
+#main {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#footer {
+    clear: both;
+    border-top: 2px solid black;
+    text-align: center;
+}
