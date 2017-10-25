@@ -1,24 +1,25 @@
-function Snake() {
-    this.pos;
-    this.dir;
-    this.tail = [];
-    this.radius = 20;
-
-    this.Setup = function(pos, dir, length) {
+class Snake {
+    constructor(pos, dir, len) {
         this.pos = pos; // head position
         this.dir = dir;
-        for (var i = 0; i < length; i++) {
-            var temp = pos.x + dir.x * i * this.radius;
-            this.tail.push(createVector(temp, 0));
+        this.tail = [];
+        this.length = 10;
+
+        this.tail.push(new Segment(createVector(pos.x, pos.y), 0, this.length)); // head
+        for (let i = 0; i < len; i++) {
+            let temp = new Segment(this.tail[i].end.copy(), 0, this.length);
+            this.tail.push(temp);
         }
     }
-    this.Move = function() {
-        for (var i = 0; i < this.tail.length; i++) {
-            this.tail[i].add(this.dir);
-            ellipse(this.tail[i].x, this.tail[i].y, this.radius, this.radius);
+    move() {
+        this.tail[0].follow(mouseX, mouseY);
+        this.tail[0].show();
+        for (let i = 1; i < this.tail.length; i++) {
+            this.tail[i].follow(this.tail[i - 1].start.x, this.tail[i - 1].start.y);
+            this.tail[i].show();
         }
     }
-    this.Steer = function(x, y) {
+    steer(x, y) {
         if (this.dir.x != 0 && this.dir.x == -x)
             return;
         if (this.dir.y != 0 && this.dir.y == -y)
@@ -26,8 +27,5 @@ function Snake() {
 
         this.dir.x = x;
         this.dir.y = y;
-    }
-    this.Update = function() {
-        this.Move();
     }
 }
